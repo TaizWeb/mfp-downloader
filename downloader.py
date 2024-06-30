@@ -29,9 +29,17 @@ class Downloader:
 
         # Download the files
         for link in self.link_list:
-            print(f"Trying to download {link}")
+            print(f"Downloading {link}...")
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            }
             filename = link.split("/")[-1]
-            urllib.request.urlretrieve(link, filename)
+            request = urllib.request.Request(link, headers=headers)
+            with urllib.request.urlopen(request) as response, open(
+                filename, "wb"
+            ) as out_file:
+                data = response.read()
+                out_file.write(data)
 
         self.tag_links()
 
@@ -54,10 +62,7 @@ class Downloader:
 
 
 web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
-# print(web_scraper.get_site_html())
 avail_titles = web_scraper.parse_available_titles()
-# print(avail_titles)
-# print([web_scraper.title_to_link(title) for title in avail_titles])
 human_titles = [web_scraper.title_to_link(title) for title in avail_titles]
 downloader = Downloader(human_titles, "foobar", "MFP", "MFP")
 downloader.download_links()
