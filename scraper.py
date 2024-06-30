@@ -14,7 +14,29 @@ WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
 
 
 class Scraper:
-    """Class to assist in scraping"""
+    """
+    Scraper class to parse data from the site into a download links
+
+    Attributes
+    ----------
+    webdriver_path: str
+        The path to the webdriver
+    site_link: str
+        The link to the source, user-facing site
+    source_link: str
+        The link to the site that has the mp3 files
+
+    Methods
+    -------
+    create_driver(webdriver_path: str)
+        Create the webdriver object for the class instance
+    get_site_html()
+        Retrieves the site's HTML as a BeautifulSoup object
+    parse_available_titles()
+        Pulls the titles out of the site specified in site_link
+    title_to_link(human_title: str):
+        Converts the titles into the link format for the source_link site
+    """
 
     def __init__(self, webdriver_path: str, site_link: str, source_link: str):
         self.site_link = site_link
