@@ -11,13 +11,6 @@ SOURCE_LINK = "https://datashat.net/"  # The domain of the actual data storage
 WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
 
 
-web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
-# print(web_scraper.get_site_html())
-avail_titles = web_scraper.parse_available_titles()
-print(avail_titles)
-print([web_scraper.title_to_link(title) for title in avail_titles])
-
-
 class Downloader:
     """docstring for Downloader."""
 
@@ -36,6 +29,7 @@ class Downloader:
 
         # Download the files
         for link in self.link_list:
+            print(f"Trying to download {link}")
             filename = link.split("/")[-1]
             urllib.request.urlretrieve(link, filename)
 
@@ -46,8 +40,9 @@ class Downloader:
         for song in self.link_list:
             song_filename = song.split("/")[-1]
             song_path = f"{self.directory_path}/{song_filename}"
+            song_name = song_filename.split(".")[0]
             tags = {
-                "metadata": f"title={song_filename.split('.')[0]}",
+                "metadata": f"title={song_name}",
                 "metadata": f"artist={self.artist_name}",
                 "metadata": f"album={self.album_title}",
             }
@@ -56,3 +51,13 @@ class Downloader:
                 .output(song_path, **tags)
                 .run(overwrite_output=True)
             )
+
+
+web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
+# print(web_scraper.get_site_html())
+avail_titles = web_scraper.parse_available_titles()
+# print(avail_titles)
+# print([web_scraper.title_to_link(title) for title in avail_titles])
+human_titles = [web_scraper.title_to_link(title) for title in avail_titles]
+downloader = Downloader(human_titles, "foobar", "MFP", "MFP")
+downloader.download_links()
