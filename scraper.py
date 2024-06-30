@@ -58,11 +58,11 @@ class Scraper:
         71-neon_genesis.mp3
         """
         source_title = human_title.replace(": ", "-").replace(" ", "_").lower()
-        return f"{SOURCE_LINK}{source_title}.mp3"
+        return f"{SOURCE_LINK}music_for_programming_{source_title}.mp3"
 
 
 web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK)
-# print(web_scraper.get_site_html())
+print(web_scraper.get_site_html())
 avail_titles = web_scraper.parse_available_titles()
 print(avail_titles)
-print(web_scraper.title_to_link(avail_titles))
+print([web_scraper.title_to_link(title) for title in avail_titles])
