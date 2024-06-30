@@ -1,3 +1,5 @@
+"""Module to handle scraping the source site"""
+
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -6,11 +8,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
-
-# Site constants
-SITE_LINK = "https://musicforprogramming.net/latest/"  # The domain of the site
-SOURCE_LINK = "https://datashat.net/"  # The domain of the actual data storage
-WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
 
 
 class Scraper:
@@ -115,8 +112,8 @@ class Scraper:
         return f"{self.source_link}music_for_programming_{source_title}.mp3"
 
 
-web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
-# print(web_scraper.get_site_html())
-avail_titles = web_scraper.parse_available_titles()
-print(avail_titles)
-print([web_scraper.title_to_link(title) for title in avail_titles])
+# web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
+# # print(web_scraper.get_site_html())
+# avail_titles = web_scraper.parse_available_titles()
+# print(avail_titles)
+# print([web_scraper.title_to_link(title) for title in avail_titles])
