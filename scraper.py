@@ -57,7 +57,12 @@ class Scraper:
         To this:
         71-neon_genesis.mp3
         """
+        # Remove the leading 0 if it exists
+        if human_title[0] == "0":
+            human_title = human_title[1:]
+        # Replace the invalid characters for a link
         source_title = human_title.replace(": ", "-").replace(" ", "_").lower()
+        # Return the full result
         return f"{SOURCE_LINK}music_for_programming_{source_title}.mp3"
 
 
