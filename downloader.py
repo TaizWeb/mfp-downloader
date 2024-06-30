@@ -14,7 +14,13 @@ WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
 class Downloader:
     """docstring for Downloader."""
 
-    def __init__(self, link_list, directory_path, artist_name, album_title):
+    def __init__(
+        self,
+        link_list: list,
+        directory_path: str,
+        artist_name: str = "",
+        album_title: str = "",
+    ):
         self.directory_path = directory_path
         self.artist_name = artist_name
         self.album_title = album_title
@@ -58,22 +64,24 @@ class Downloader:
                 data = response.read()
                 out_file.write(data)
 
-        self.tag_links()
+        # Lol, apparently the songs come pre-tagged
+        # self.tag_links()
 
     def tag_links(self):
         """Tag the links"""
         for song in self.link_list:
             song_filename = song.split("/")[-1]
-            song_path = f"{self.directory_path}/{song_filename}"
+            song_path = f"./{self.directory_path}/{song_filename}"
             song_name = song_filename.split(".")[0]
             tags = {
                 "metadata": f"title={song_name}",
                 "metadata": f"artist={self.artist_name}",
                 "metadata": f"album={self.album_title}",
             }
+            print(f"Does {song_filename} exist: {os.path.exists(song_filename)}")
             (
-                ffmpeg.input(song_path)
-                .output(song_path, **tags)
+                ffmpeg.input(song_filename)  # Since we're already in the dir
+                .output(f"tagged_{song_filename}", **tags)
                 .run(overwrite_output=True)
             )
 
@@ -82,4 +90,4 @@ web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
 avail_titles = web_scraper.parse_available_titles()
 human_titles = [web_scraper.title_to_link(title) for title in avail_titles]
 downloader = Downloader(human_titles, "foobar", "MFP", "MFP")
-downloader.download_links(indices=[5, 10, 20])
+downloader.download_links(indices=[5])  # NOTE: Track 20 seems to fail?
