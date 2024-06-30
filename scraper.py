@@ -11,8 +11,6 @@ import time
 SITE_LINK = "https://musicforprogramming.net/latest/"  # The domain of the site
 SOURCE_LINK = "https://datashat.net/"  # The domain of the actual data storage
 WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
-# SITE_DATA = requests.get(SITE_LINK)
-# SITE_HTML = SITE_DATA.content
 
 
 class Scraper:
@@ -24,12 +22,23 @@ class Scraper:
         self.site_soup = None  # Maybe change this later to find it "now"
 
     def create_driver(self, webdriver_path: str):
-        """Sets up the webdriver"""
+        """Sets up the webdriver
+
+        Parameters
+        ----------
+        webdriver_path: str
+        The path to the webdriver
+
+        Returns
+        -------
+        driver: WebDriver
+        The driver that will be used for HTML retrieval
+        """
         service = Service(webdriver_path)
         return webdriver.Chrome(service=service)
 
     def get_site_html(self):
-        """Retrieves the site's html"""
+        """Retrieves the site's HTML"""
         self.driver.get(self.site_link)
         # The site is "fancy" and hides the song titles until they "load"
         # Sure it looks nice but boy is it annoying to work around
@@ -39,7 +48,13 @@ class Scraper:
         self.site_soup = BeautifulSoup(site_html, "lxml")
 
     def parse_available_titles(self):
-        """Returns a list of the titles"""
+        """Returns a list of the titles
+
+        Returns
+        -------
+        titles: list
+        A list of every available title on the site
+        """
         sections = self.site_soup.find_all("section")
         title_section = sections[2]  # This is the last section
         return [
@@ -49,6 +64,15 @@ class Scraper:
     def title_to_link(self, human_title: str):
         """Converts a songs title to the actual link
 
+        Parameters
+        ----------
+        human_title: str
+        The title the user sees
+
+        Returns
+        -------
+        link: str
+        The link to the source mp3 file
 
         Notes
         -----
