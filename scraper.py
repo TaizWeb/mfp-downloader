@@ -47,12 +47,12 @@ class Scraper:
         Parameters
         ----------
         webdriver_path: str
-        The path to the webdriver
+            The path to the webdriver
 
         Returns
         -------
         driver: WebDriver
-        The driver that will be used for HTML retrieval
+            The driver that will be used for HTML retrieval
         """
         service = Service(webdriver_path)
         return webdriver.Chrome(service=service)
@@ -73,7 +73,7 @@ class Scraper:
         Returns
         -------
         titles: list
-        A list of every available title on the site
+            A list of every available title on the site
         """
         sections = self.site_soup.find_all("section")
         title_section = sections[2]  # This is the last section
@@ -87,12 +87,12 @@ class Scraper:
         Parameters
         ----------
         human_title: str
-        The title the user sees
+            The title the user sees
 
         Returns
         -------
         link: str
-        The link to the source mp3 file
+            The link to the source mp3 file
 
         Notes
         -----
