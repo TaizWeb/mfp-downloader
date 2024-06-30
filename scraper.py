@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 import time
 
 # Site constants
-SITE_LINK = "https://musicforprogramming.net/latest/"
+SITE_LINK = "https://musicforprogramming.net/latest/"  # The domain of the site
+SOURCE_LINK = "https://datashat.net/"  # The domain of the actual data storage
 WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
 # SITE_DATA = requests.get(SITE_LINK)
 # SITE_HTML = SITE_DATA.content
@@ -45,10 +46,23 @@ class Scraper:
             title_link.contents[0].text for title_link in title_section.find_all("a")
         ]
 
-    def title_to_link(self):
-        """Converts a songs title to the actual link"""
+    def title_to_link(self, human_title: str):
+        """Converts a songs title to the actual link
+
+
+        Notes
+        -----
+        Converts this:
+        71: Neon Genesis
+        To this:
+        71-neon_genesis.mp3
+        """
+        source_title = human_title.replace(": ", "-").replace(" ", "_").lower()
+        return f"{SOURCE_LINK}{source_title}.mp3"
 
 
 web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK)
-print(web_scraper.get_site_html())
-print(web_scraper.parse_available_titles())
+# print(web_scraper.get_site_html())
+avail_titles = web_scraper.parse_available_titles()
+print(avail_titles)
+print(web_scraper.title_to_link(avail_titles))
