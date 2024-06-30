@@ -61,7 +61,9 @@ class Scraper:
         if human_title[0] == "0":
             human_title = human_title[1:]
         # Replace the invalid characters for a link
-        source_title = human_title.replace(": ", "-").replace(" ", "_").lower()
+        source_title = (
+            human_title.replace(": ", "-").replace(" ", "_").replace("+", "and").lower()
+        )
         # Return the full result
         return f"{SOURCE_LINK}music_for_programming_{source_title}.mp3"
 
