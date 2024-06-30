@@ -16,10 +16,11 @@ WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
 class Scraper:
     """Class to assist in scraping"""
 
-    def __init__(self, webdriver_path: str, site_link: str):
-        self.driver = self.create_driver(webdriver_path)
+    def __init__(self, webdriver_path: str, site_link: str, source_link: str):
         self.site_link = site_link
-        self.site_soup = None  # Maybe change this later to find it "now"
+        self.source_link = source_link
+        self.driver = self.create_driver(webdriver_path)
+        self.site_soup = self.get_site_html()
 
     def create_driver(self, webdriver_path: str):
         """Sets up the webdriver
@@ -45,7 +46,7 @@ class Scraper:
         time.sleep(4)
         site_html = self.driver.page_source
         self.driver.quit()
-        self.site_soup = BeautifulSoup(site_html, "lxml")
+        return BeautifulSoup(site_html, "lxml")
 
     def parse_available_titles(self):
         """Returns a list of the titles
@@ -89,11 +90,11 @@ class Scraper:
             human_title.replace(": ", "-").replace(" ", "_").replace("+", "and").lower()
         )
         # Return the full result
-        return f"{SOURCE_LINK}music_for_programming_{source_title}.mp3"
+        return f"{self.source_link}music_for_programming_{source_title}.mp3"
 
 
-web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK)
-print(web_scraper.get_site_html())
+web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
+# print(web_scraper.get_site_html())
 avail_titles = web_scraper.parse_available_titles()
 print(avail_titles)
 print([web_scraper.title_to_link(title) for title in avail_titles])
