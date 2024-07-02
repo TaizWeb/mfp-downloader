@@ -1,6 +1,5 @@
 """Module to handle downloading and tagging of files"""
 
-# from scraper import Scraper
 import os
 import urllib.request
 import ffmpeg
