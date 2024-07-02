@@ -58,7 +58,12 @@ class Scraper:
         return webdriver.Chrome(service=service)
 
     def get_site_html(self):
-        """Retrieves the site's HTML"""
+        """Retrieves the site's HTML
+
+        Returns
+        -------
+        SoupObject: The BeautifulSoup object to be later processed
+        """
         self.driver.get(self.site_link)
         # The site is "fancy" and hides the song titles until they "load"
         # Sure it looks nice but boy is it annoying to work around

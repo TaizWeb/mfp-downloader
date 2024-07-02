@@ -7,7 +7,29 @@ import ffmpeg
 
 
 class Downloader:
-    """docstring for Downloader."""
+    """
+    Downloader class to download the links acquired from the Scraper class
+
+    Attributes
+    ----------
+    link_list: list
+        The list of source links to download
+    directory_path: str
+        The directory to store the songs into, if this doesn't exist, it will
+        be created
+    artist_name: str
+        The name of the artist, used for tagging
+    album_title: str
+        The title of the album, used for tagging
+
+    Methods
+    -------
+    download_links(indices=[])
+        Downloads the links set on object creation, at the indices provided
+    tag_links()
+        Tags the links after downloading. Not currently used, since the songs
+        appear to come pre-tagged
+    """
 
     def __init__(
         self,
