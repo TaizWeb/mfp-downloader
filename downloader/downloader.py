@@ -42,7 +42,7 @@ class Downloader:
         self.album_title = album_title
         self.link_list = link_list
 
-    def download_links(self, indices=[]):
+    def download_links(self, indices=None):
         """Download the links
 
         Parameters
@@ -62,7 +62,7 @@ class Downloader:
         os.chdir(self.directory_path)
 
         # Does the user have specific tracks in mind?
-        if len(indices) > 0:
+        if indices is not None and len(indices) > 0:
             self.link_list = [self.link_list[i] for i in indices]
 
         # Download the files
@@ -70,7 +70,10 @@ class Downloader:
             print(f"Downloading {link}...")
             # Telling a quick lie to get around 403 errors
             headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537"
+                    ".36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                )
             }
             filename = link.split("/")[-1]
             request = urllib.request.Request(link, headers=headers)
@@ -87,12 +90,9 @@ class Downloader:
         """Tag the links"""
         for song in self.link_list:
             song_filename = song.split("/")[-1]
-            song_path = f"./{self.directory_path}/{song_filename}"
             song_name = song_filename.split(".")[0]
             tags = {
-                "metadata": f"title={song_name}",
-                "metadata": f"artist={self.artist_name}",
-                "metadata": f"album={self.album_title}",
+                "metadata": f"title={song_name} artist={self.artist_name} album={self.album_title}",
             }
             (
                 ffmpeg.input(song_filename)  # Since we're already in the dir

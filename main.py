@@ -1,8 +1,8 @@
 """Main file to utilize the scraper and downloader"""
 
 # from scraper.scraper import Scraper
-from scraper import Scraper
-from downloader import Downloader
+from .scraper import Scraper
+from .downloader import Downloader
 
 # Constants
 SITE_LINK = "https://musicforprogramming.net/latest/"  # The domain of the site
