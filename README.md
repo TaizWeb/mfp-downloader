@@ -8,8 +8,6 @@ This is a tool to download the contents of [musicForProgramming();](https://musi
 2. Ensure you have [Python 3.10.12](https://www.python.org/downloads/) (or later, but imagine putting breaking changes in a minor release lol)
 3. Install the dependencies: `pip install -r requirements.txt`
 
-## Settings
-TBD
-
-## Running
-While in the directory, execute `python main.py` to run the script. This will download all ~7GB(!) worth of tracks to the folder specified in the settings file.
+## Usage
+While in the directory, execute `python main.py <folder_name>` to run the script. This will download all ~7GB(!) worth of tracks to the folder specified in <folder_name>.
+For example, `python main.py songs` will create a folder called "songs" that holds all the songs inside of it.
