@@ -76,6 +76,10 @@ class Downloader:
                 )
             }
             filename = link.split("/")[-1]
+            # Encode the URL, pesky umlaut
+            link = urllib.parse.quote(link, safe=":/")
+
+            # Acquire the link's file
             request = urllib.request.Request(link, headers=headers)
             with urllib.request.urlopen(request) as response, open(
                 filename, "wb"

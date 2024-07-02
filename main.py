@@ -2,9 +2,9 @@
 
 import os
 import argparse
+from dotenv import load_dotenv
 from scraper import Scraper
 from downloader import Downloader
-from dotenv import load_dotenv
 
 # Constants
 load_dotenv()
@@ -26,4 +26,4 @@ web_scraper = Scraper(
 avail_titles = web_scraper.parse_available_titles()
 human_titles = [web_scraper.title_to_link(title) for title in avail_titles]
 downloader = Downloader(human_titles, args.destination_folder)
-downloader.download_links(indices=[5])  # NOTE: Track 20 seems to fail?
+downloader.download_links(indices=[20])  # NOTE: Track 20 seems to fail?
