@@ -1,10 +1,13 @@
 """Main file to utilize the scraper and downloader"""
 
+import os
 import argparse
 from scraper import Scraper
 from downloader import Downloader
+from dotenv import load_dotenv
 
 # Constants
+load_dotenv()
 SITE_LINK = "https://musicforprogramming.net/latest/"  # The domain of the site
 SOURCE_LINK = "https://datashat.net/"  # The domain of the actual data storage
 WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
@@ -17,7 +20,9 @@ parser.add_argument(
 args = parser.parse_args()
 
 # Use the modules to download the tracks
-web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
+web_scraper = Scraper(
+    os.getenv("WEBDRIVER_PATH"), os.getenv("SITE_LINK"), os.getenv("SOURCE_LINK")
+)
 avail_titles = web_scraper.parse_available_titles()
 human_titles = [web_scraper.title_to_link(title) for title in avail_titles]
 downloader = Downloader(human_titles, args.destination_folder)
