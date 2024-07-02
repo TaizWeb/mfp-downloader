@@ -1,14 +1,9 @@
 """Module to handle downloading and tagging of files"""
 
-from scraper import Scraper
+# from scraper import Scraper
 import os
 import urllib.request
 import ffmpeg
-
-# Site constants
-SITE_LINK = "https://musicforprogramming.net/latest/"  # The domain of the site
-SOURCE_LINK = "https://datashat.net/"  # The domain of the actual data storage
-WEBDRIVER_PATH = "/home/taiz/chromedriver/chromedriver-linux64/chromedriver"
 
 
 class Downloader:
@@ -78,16 +73,8 @@ class Downloader:
                 "metadata": f"artist={self.artist_name}",
                 "metadata": f"album={self.album_title}",
             }
-            print(f"Does {song_filename} exist: {os.path.exists(song_filename)}")
             (
                 ffmpeg.input(song_filename)  # Since we're already in the dir
                 .output(f"tagged_{song_filename}", **tags)
                 .run(overwrite_output=True)
             )
-
-
-web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
-avail_titles = web_scraper.parse_available_titles()
-human_titles = [web_scraper.title_to_link(title) for title in avail_titles]
-downloader = Downloader(human_titles, "foobar", "MFP", "MFP")
-downloader.download_links(indices=[5])  # NOTE: Track 20 seems to fail?

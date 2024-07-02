@@ -110,10 +110,3 @@ class Scraper:
         )
         # Return the full result
         return f"{self.source_link}music_for_programming_{source_title}.mp3"
-
-
-# web_scraper = Scraper(WEBDRIVER_PATH, SITE_LINK, SOURCE_LINK)
-# # print(web_scraper.get_site_html())
-# avail_titles = web_scraper.parse_available_titles()
-# print(avail_titles)
-# print([web_scraper.title_to_link(title) for title in avail_titles])
