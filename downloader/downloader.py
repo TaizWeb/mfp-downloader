@@ -80,12 +80,17 @@ class Downloader:
             link = urllib.parse.quote(link, safe=":/")
 
             # Acquire the link's file
-            request = urllib.request.Request(link, headers=headers)
-            with urllib.request.urlopen(request) as response, open(
-                filename, "wb"
-            ) as out_file:
-                data = response.read()
-                out_file.write(data)
+            try:
+                request = urllib.request.Request(link, headers=headers)
+                with urllib.request.urlopen(request) as response, open(
+                    filename, "wb"
+                ) as out_file:
+                    data = response.read()
+                    out_file.write(data)
+            except urllib.error.HTTPError:
+                # Some URLs are named strangely, skip them for now
+                print(f"Bad parsing, URL doesn't cleanly convert for {link}")
+                continue
 
         # Lol, apparently the songs come pre-tagged
         # self.tag_links()
