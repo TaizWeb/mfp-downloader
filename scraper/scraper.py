@@ -55,6 +55,7 @@ class Scraper:
         options.add_argument("--headless")  # Enable headless mode
         options.add_argument("--enable-logging")
         options.add_argument("--v=1")  # Verbose logging level
+        options.add_argument("--remote-debugging-port=9001")  # It's over 9000
         return webdriver.Chrome(service=service, options=options)
 
     def get_site_html(self):
