@@ -53,6 +53,8 @@ class Scraper:
         service = Service(webdriver_path)
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")  # Enable headless mode
+        options.add_argument("--enable-logging")
+        options.add_argument("--v=1")  # Verbose logging level
         return webdriver.Chrome(service=service, options=options)
 
     def get_site_html(self):
