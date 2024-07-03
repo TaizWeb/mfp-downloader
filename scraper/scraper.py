@@ -51,7 +51,9 @@ class Scraper:
             The driver that will be used for HTML retrieval
         """
         service = Service(webdriver_path)
-        return webdriver.Chrome(service=service)
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")  # Enable headless mode
+        return webdriver.Chrome(service=service, options=options)
 
     def get_site_html(self):
         """Retrieves the site's HTML
