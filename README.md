@@ -19,7 +19,7 @@ In the root of the project, you'll find the `.env` file. This contains the neces
 
 
 ### Acquiring a Webdriver
-Download one from [Chrome's Repository](https://googlechromelabs.github.io/chrome-for-testing/) and update the `.env` variable to match the path to it
+Download one from [Chrome's Repository](https://googlechromelabs.github.io/chrome-for-testing/) and update the `.env` variable to match the path to it. You will also need a chrome/chromium binary installed to use this, since the driver itself doesn't contain all the necessary functionality to operate the browser.
 
 ## Usage
 While in the directory, execute `python main.py <folder_name>` to run the script. This will download all ~7GB(!) worth of tracks to the folder specified in <folder_name>.
